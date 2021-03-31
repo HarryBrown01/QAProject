@@ -1,0 +1,109 @@
+<apex:page showHeader="false" sidebar="false" renderAs="pdf" standardStylesheets="false" applyHtmlTag="false" standardController="Expense_Invoice__c" extensions="myExpenseExtension" action="{!createAttachment}">
+    <head>
+        <style>
+            @page {
+                size: A4;
+                margin: 6mm;
+                padding: 0mm;
+                background-color: #e1e1e1;
+            }
+            body{
+                font-family: 'Quattrocento Sans', sans-serif;
+                font-size: 22px;
+            }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5 {
+                margin: 0px 0px 10px 0px;
+            }
+            .Header {
+                display: inline-block;
+                margin: 0px 0px 20px 0px;
+            }
+            .invoice__contact{
+                height: 250px;
+                margin: 0px 0px 20px 0px;
+            }
+            .invoice__address--left {
+                float: left;
+                width:45%;
+                text-align: left;
+            }            
+            .invoice__address--right {
+                float: right;
+                width: 45%;
+                text-align: right;
+            }
+            .InvoiceLines{
+            	margin: 20px 0px;
+            	font-size: 18px;
+            }
+            .NameStyle{
+            	border:1px solid black;
+            	padding: 5px 110px 5px 5px;
+            }
+            .TypeStyle{
+            	border:1px solid black;
+            	padding: 5px 110px 5px 5px;
+            }
+            .DayStyle{
+            	border:1px solid black;
+            	padding: 5px 20px 5px 5px;
+            }
+            .AmountStyle{
+            	border:1px solid black;
+            	padding: 5px 5px 5px 20px;
+            	text-align:right;
+            }
+        </style>
+    </head>
+    <div class="Header">
+        <h1>Expense Invoice</h1>
+        <h5>Instructor: {!Expense_Invoice__c.Instructor__c}</h5>
+        <h5>Related Course: {!Expense_Invoice__c.Schedule_Course__r.Name}</h5>
+        <h5>Invoice Number: {!Expense_Invoice__c.Name}</h5>
+        <h5>Invoice Date: {!Expense_Invoice__c.Invoice_Date__c}</h5>
+        <h5>Invoice Due Date: {!Expense_Invoice__c.Due_Date__c}</h5>
+    </div>
+    <div class="invoice__contact">
+        <div class="invoice__address invoice__address--left">
+            <h3>Billed To:</h3>
+            <span class="address__line">Jason Peters<br></br></span>
+            <span class="address__line">ForceTraining Ltd<br></br></span>
+            <span class="address__line">Nexus Business Centre<br></br></span>
+            <span class="address__line">Cheney Manor<br></br></span>
+            <span class="address__line">Swindon<br></br></span>
+            <span class="address__line">Wiltshere<br></br></span>
+            <span class="address__line">SN2 2PN<br></br></span>
+            <span class="address__line">United Kingdom</span>
+        </div>
+        <div class="invoice__address invoice__address--right">
+            <h3>Shipped To:</h3>
+            <span class="address__line">Jason Peters<br></br></span>
+            <span class="address__line">ForceTraining Ltd<br></br></span>
+            <span class="address__line">Nexus Business Centre<br></br></span>
+            <span class="address__line">Cheney Manor<br></br></span>
+            <span class="address__line">Swindon<br></br></span>
+            <span class="address__line">Wiltshere<br></br></span>
+            <span class="address__line">SN2 2PN<br></br></span>
+            <span class="address__line">United Kingdom</span>
+        </div>
+    </div>
+	<div class="InvoiceLines">
+        <apex:pageBlock >
+            <apex:pageBlockTable id="ExpenseInvoice" value="{!Expense_Invoice__c.Expense_Invoice_Lines__r}" var="ca" captionStyle="text-align:left;font-weight:bold;">
+                <apex:column style="border:1px solid black; padding: 5px;" value="{!ca.Name}" headerValue="Invoice Number" footerValue="Total Amount" headerClass="NameStyle" footerClass="NameStyle"/>
+                <apex:column style="border:1px solid black; padding: 5px;" value="{!ca.Type__c}" headerClass="TypeStyle" footerClass="TypeStyle"/>
+                <apex:column style="border:1px solid black; padding: 5px;" value="{!ca.Day__c}" headerClass="DayStyle" footerClass="DayStyle"/>
+                <apex:column style="border:1px solid black; padding: 5px; text-align:right" value="{!ca.Amount__c}" footerValue="£{!Expense_Invoice__c.Expense_Invoice_Sum__c}" headerClass="AmountStyle" footerClass="AmountStyle"/>
+                <apex:column style="border:1px solid black; padding: 5px; text-align:right" value="{!ca.VAT_Amount__c}" headerValue="VAT" footerValue="£{!Expense_Invoice__c.VAT_Amount__c}" headerClass="AmountStyle" footerClass="AmountStyle"/>
+                <apex:column style="border:1px solid black; padding: 5px; text-align:right" value="{!ca.Total_Amount__c}" headerValue="Total" footerValue="£{!Expense_Invoice__c.Expense_Invoice_Total__c}" headerClass="AmountStyle" footerClass="AmountStyle"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+	</div>
+	<footer id="footer">
+        <h2>ForceTraining Ltd</h2>
+    </footer>
+</apex:page>

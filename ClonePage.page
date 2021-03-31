@@ -1,0 +1,16 @@
+<apex:page standardController="Expense_Invoice__c" recordSetVar="expenses" lightningStylesheets="true" showHeader="true" extensions="myCloneExtension">
+    <apex:form id="theForm">
+        <apex:pageBlock title="Clone Expense Invoice">
+            <apex:pageBlockTable id="expenseList" value="{!expenses}" var="expense">
+            	<apex:facet name="caption">Expense Invoice Listing</apex:facet>
+                <apex:column >
+                    <apex:commandButton value="{!expense.Name}" id="cloneButton" action="{!CloneLines}" reRender="none">
+                        <apex:param name="ExpenseId" value="{!expense.Id}" assignTo="{!ExpenseId}"/>
+                    </apex:commandButton>
+                </apex:column>
+                <apex:column value="{!expense.Schedule_Course__r.Location__c}"/>
+                <apex:column value="{!expense.Expense_Invoice_Total__c}"/>
+             </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,117 @@
+<apex:page showHeader="false" sidebar="false" renderAs="pdf" standardStylesheets="false" applyHtmlTag="false" standardController="Service_Invoice__c" extensions="myControllerExtension" action="{!createAttachment}">
+    <head>
+        <style>
+            @page {
+                size: A4;
+                margin: 6mm;
+                padding: 0mm;
+            	background-color: #e1e1e1;
+            }
+            body{
+            	font-family: 'Quattrocento Sans', sans-serif;
+            	font-size: 22px;
+            }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5 {
+                margin: 0px 0px 10px 0px;
+            }
+            .Header {
+            	display: inline-block;
+            	margin: 0px 0px 20px 0px;
+            }
+            .invoice__contact{
+            	height: 250px;
+            	margin: 0px 0px 20px 0px;
+            }
+            .invoice__address--left {
+            	float: left;
+                width:45%;
+                text-align: left;
+            }            
+            .invoice__address--right {
+            	float: right;
+                width: 45%;
+                text-align: right;
+            }
+            .InvoiceLines{
+            	margin: 20px 0px;
+            }
+            .TAmount{
+            	text-align: right;
+            	border:1px solid black;
+            	padding: 5px;
+            }
+            .HAmount{
+            	text-align: right;
+            	border:1px solid black;
+            	padding: 5px;
+            }
+            .OHAmount{
+            	border:1px solid black;
+            	padding: 5px 80px 5px 5px;
+            }
+            .OTAmount{
+            	border:1px solid black;
+            	padding: 5px;
+            }
+            .AHAmount{
+            	text-align: right;
+            	border:1px solid black;
+            	padding: 5px 5px 5px 30px;
+            }
+            .ATAmount{
+            	text-align: right;
+            	border:1px solid black;
+            	padding: 5px;
+            }
+        </style>
+    </head>
+    <div class="Header">
+        <h1>Service Invoice</h1>
+        <h5>Instructor: {!Service_Invoice__c.Instructor__c}</h5>
+        <h5>Related Course: {!Service_Invoice__c.Scheduled_Course__r.Name}</h5>
+        <h5>Invoice Number: {!Service_Invoice__c.Name}</h5>
+        <h5>Invoice Date: {!Service_Invoice__c.Invoice_Date__c}</h5>
+        <h5>Invoice Due Date: {!Service_Invoice__c.Due_Date__c}</h5>
+    </div>
+    <div class="invoice__contact">
+        <div class="invoice__address invoice__address--left">
+            <h3>Billed To:</h3>
+            <span class="address__line">Jason Peters<br></br></span>
+            <span class="address__line">ForceTraining Ltd<br></br></span>
+            <span class="address__line">Nexus Business Centre<br></br></span>
+            <span class="address__line">Cheney Manor<br></br></span>
+            <span class="address__line">Swindon<br></br></span>
+            <span class="address__line">Wiltshere<br></br></span>
+            <span class="address__line">SN2 2PN<br></br></span>
+            <span class="address__line">United Kingdom</span>
+        </div>
+        <div class="invoice__address invoice__address--right">
+            <h3>Shipped To:</h3>
+            <span class="address__line">Jason Peters<br></br></span>
+            <span class="address__line">ForceTraining Ltd<br></br></span>
+            <span class="address__line">Nexus Business Centre<br></br></span>
+            <span class="address__line">Cheney Manor<br></br></span>
+            <span class="address__line">Swindon<br></br></span>
+            <span class="address__line">Wiltshere<br></br></span>
+            <span class="address__line">SN2 2PN<br></br></span>
+            <span class="address__line">United Kingdom</span>
+        </div>
+    </div>
+    <div class="InvoiceLines">
+        <apex:pageBlock >
+            <apex:pageBlockTable id="ServiceInvoice" value="{!Service_Invoice__c.Service_Invoices__r}" var="ca" captionStyle="text-align:left;font-weight:bold;">
+                <apex:column style="border:1px solid black; padding: 5px;" value="{!ca.Name}" footerValue="Total Amount" headerClass="OHAmount" footerClass="OTAmount"/>
+                <apex:column style="border:1px solid black; text-align: right; padding: 5px;" value="{!ca.Amount_del_del__c}" footerValue="£{!Service_Invoice__c.Service_Invoice_Sum__c}" headerClass="AHAmount" footerClass="ATAmount"/>
+                <apex:column style="border:1px solid black; text-align: right; padding: 5px;" value="{!ca.VAT_Amount__c}" footerValue="£{!Service_Invoice__c.VATTotal__c}" headerClass="HAmount" footerClass="TAmount"/>
+                <apex:column style="border:1px solid black; text-align: right; padding: 5px;" value="{!ca.Total_Amount__c}" footerValue="£{!Service_Invoice__c.Service_Invoice_Total__c}" headerClass="HAmount" footerClass="TAmount"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </div>
+    <footer id="footer">
+        <h2>ForceTraining Ltd</h2>
+    </footer>
+</apex:page>
